@@ -15,7 +15,7 @@ function LoadMoreBtn({
     },
   });
   return (
-    <div ref={ref} className="loading">
+    <div ref={ref}>
       <button onClick={onClick}>
         {isLoading ? "Loading more..." : "Load more"}
       </button>
