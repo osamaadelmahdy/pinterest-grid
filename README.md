@@ -1,50 +1,56 @@
-# React + TypeScript + Vite
+## Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project showcases advanced proficiency in ReactJS, UI/UX design, and performance optimization through three distinct challenges:
 
-Currently, two official plugins are available:
+1. **Infinite Scroll with Performance Optimization**: A Pinterest-style image grid featuring lazy loading and virtualization for enhanced performance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Virtualization**: Utilizing React Virtualized to efficiently render a large number of items.
+- **tanstack/react-virtual**: Leveraging tanstack/react-virtual for virtualization.
+- **tanstack/react-query**: Utilizing tanstack/react-query for data fetching and caching.
+- **react-responsive-masonry**: Creating a responsive masonry layout using react-responsive-masonry.
 
-## Expanding the ESLint configuration
+2. **Dedicated Pagination Page**: A standalone page implementing robust pagination controls for seamless image navigation.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Pagination**: Utilizing a custom Pagination component for navigation.
+- **react-router-dom**: Leveraging react-router-dom for routing.
 
-- Configure the top-level `parserOptions` property like this:
+3. **Drag-and-Drop Analytics Dashboard**: An interactive dashboard with four customizable charts, allowing users to reorder them via drag-and-drop functionality.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Drag-and-Drop**: Utilizing dnd-kit for drag-and-drop functionality.
+- **dnd-kit**: Leveraging dnd-kit for drag-and-drop functionality.
+- **recharts**: Utilizing recharts for data visualization.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+---
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Setup Instructions
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. **Clone the Repository**:
+
+   ```bash
+   git clone <repository-url>
+   ```
+
+2. **Install Dependencies**:
+
+   ```bash
+   yarn
+   ```
+
+3. **Run the Application**:
+   ```bash
+   yarn dev
+   ```
+
+---
+
+## Technologies Used
+
+- **ReactJS**: A JavaScript library for building user interfaces.
+- **TypeScript**: A typed superset of JavaScript.
+- **Vite**: A fast and modern frontend build tool.
+- **React Router**: A routing library for React.
+- **Tanstack Query**: A data fetching and caching library.
+- **Tanstack React Virtual**: A virtualization library for React.
+- **React Responsive Masonry**: A responsive masonry layout library.
+- **dnd-kit**: A drag-and-drop library for React.
+- **Recharts**: A data visualization library.
