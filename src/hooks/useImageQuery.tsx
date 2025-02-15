@@ -15,7 +15,10 @@ export function useImageQuery() {
   >({
     queryKey: ["images"],
     queryFn: async ({ pageParam = 1 }) =>
-      await fetchImages(pageParam as number, ITEMS_PER_PAGE),
+      await fetchImages({
+        page: pageParam as number,
+        limit: ITEMS_PER_PAGE,
+      }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === ITEMS_PER_PAGE

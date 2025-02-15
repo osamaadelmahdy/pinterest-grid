@@ -1,12 +1,12 @@
-import SkeletonComponent from "./SkeletonComponent";
-import MasonryLayout from "./MasonryContainer";
-import Image from "./Image";
-import LoadMoreBtn from "./LoadMoreBtn";
+import SkeletonComponent from "../components/SkeletonComponent";
+import MasonryLayout from "../components/MasonryContainer";
+import Image from "../components/Image";
+import LoadMoreBtn from "../components/LoadMoreBtn";
 import { useImageQuery } from "../hooks/useImageQuery";
 import { useGalleryVirtualizer } from "../hooks/useGalleryVirtualizer";
 import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
-import VirtualContainer from "./VirtualContainer";
-import MasonryContainer from "./MasonryContainer";
+import VirtualContainer from "../components/VirtualContainer";
+import MasonryContainer from "../components/MasonryContainer";
 
 function Gallery() {
   const {
@@ -41,6 +41,7 @@ function Gallery() {
   }
   return (
     <>
+      <h1>Image Gallery</h1>
       <VirtualContainer virtualizer={virtualizer}>
         <MasonryContainer>
           {virtualizer?.getVirtualItems()?.map((virtualItem) => {
