@@ -2,7 +2,7 @@ import { useState } from "react";
 import { usePaginatedImages } from "../hooks/usePaginatedImages";
 import Pagination from "../components/Pagination";
 import LimitSelector from "../components/LimitSelector";
-import Skeleton from "react-loading-skeleton";
+import ImageSkeleton from "../components/ImageSkeleton";
 import ImageGrid from "../components/ImageGrid";
 
 function PaginatedGallery() {
@@ -28,7 +28,20 @@ function PaginatedGallery() {
       </div>
 
       {isLoading ? (
-        <Skeleton count={limit} />
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+            gap: "16px",
+            padding: "16px",
+          }}
+        >
+          {Array.from({ length: limit }, (_, i) => i + 1).map((i) => (
+            <div key={i}>
+              <ImageSkeleton />
+            </div>
+          ))}
+        </div>
       ) : (
         <ImageGrid images={images || []} />
       )}
