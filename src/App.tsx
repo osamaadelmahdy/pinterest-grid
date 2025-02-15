@@ -8,21 +8,32 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
 const Layout = () => {
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        width: "100%",
+        overflow: "auto",
+      }}
+    >
       <nav
         style={{
           display: "flex",
           gap: "1rem",
           padding: "1rem",
+          alignSelf: "center",
         }}
       >
-        <Link to="/">Home</Link>
-        <Link to="/paginated">About</Link>
+        <Link to="/">Infinite Gallery</Link>
+        <Link to="/paginated">Paginated Gallery</Link>
+        <Link to="/dashboard">Dashboard</Link>
       </nav>
       <Outlet />
-    </>
+    </div>
   );
 };
 
@@ -37,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "/paginated",
         element: <PaginatedGallery />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },
