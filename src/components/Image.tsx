@@ -1,16 +1,8 @@
 import { memo, useState } from "react";
 import ImageSkeleton from "./ImageSkeleton";
 
-function Image({
-  image,
-}: {
-  image: {
-    id: number;
-    download_url: string;
-    author: string;
-  };
-}) {
-  const [isLoading, setIsLoading] = useState(true);
+function Image({ url, onLoad }: { url: string; onLoad?: () => void }) {
+  //   const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div
@@ -18,21 +10,20 @@ function Image({
         width: "100%",
       }}
     >
-      {isLoading && <ImageSkeleton />}
+      {/* {isLoading && <ImageSkeleton />} */}
       <img
         style={{
           width: "100%",
         }}
-        src={image.download_url}
-        alt={`Photo by ${image.author}`}
+        src={url}
         loading="lazy"
-        onLoad={() => {
-          setIsLoading(false);
-          console.log("loaded");
-        }}
+        onLoad={onLoad}
+        // onLoad={() => {
+        //   setIsLoading(false);
+        // }}
       />
     </div>
   );
 }
 
-export default memo(Image);
+export default Image;

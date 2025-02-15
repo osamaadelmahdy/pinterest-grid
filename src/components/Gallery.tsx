@@ -1,9 +1,12 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useDebouncedCallback } from "use-debounce";
 import SkeletonComponent from "./SkeletonComponent";
-import MasonryLayout from "./MasonryLayout";
+import MasonryLayout from "./MasonryContainer";
 import Image from "./Image";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { useImageQuery } from "../hooks/useImageQuery";
+import { useGalleryVirtualizer } from "../hooks/useGalleryVirtualizer";
+import { useInfiniteScroll } from "../hooks/useInfiniteScroll";
+import VirtualContainer from "./VirtualContainer";
+import MasonryContainer from "./MasonryContainer";
 
 function Gallery() {
   const {
@@ -13,32 +16,17 @@ function Gallery() {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-  } = useInfiniteQuery<
-    {
-      id: number;
-      author: string;
-      download_url: string;
-    }[]
-  >({
-    queryKey: ["images"],
-    queryFn: async ({ pageParam = 1 }) => {
-      const response = await fetch(
-        `https://picsum.photos/v2/list?page=${pageParam}&limit=10`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length ? allPages.length + 1 : undefined;
-    },
+  } = useImageQuery();
+
+  const { virtualizer, allImages } = useGalleryVirtualizer(data, hasNextPage);
+
+  const { debouncedFetch } = useInfiniteScroll({
+    virtualizer,
+    allImages,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
   });
-  const debouncedFetch = useDebouncedCallback(() => {
-    if (!hasNextPage) return;
-    fetchNextPage();
-  }, 1000);
 
   if (isLoading) {
     return (
@@ -51,16 +39,33 @@ function Gallery() {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
   return (
-    <div>
-      <MasonryLayout>
-        {data?.pages.map((images) =>
-          images?.map((image) => <Image image={image} key={image.id} />)
-        )}
-      </MasonryLayout>
+    <>
+      <VirtualContainer virtualizer={virtualizer}>
+        <MasonryContainer>
+          {virtualizer?.getVirtualItems()?.map((virtualItem) => {
+            const image = allImages[virtualItem.index];
+            if (!image) {
+              return isFetchingNextPage ? (
+                <div key="loading" style={{ height: 300 }}>
+                  Loading more...
+                </div>
+              ) : null;
+            }
+            return (
+              <div key={image.id}>
+                <Image
+                  url={image?.download_url}
+                  onLoad={() => virtualizer.measure()}
+                />
+              </div>
+            );
+          })}
+        </MasonryContainer>
+      </VirtualContainer>
+
       <LoadMoreBtn onClick={debouncedFetch} isLoading={isFetchingNextPage} />
-    </div>
+    </>
   );
 }
 
